@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - HelloFX",
+            "request": "launch",
+            "mainClass": "com.dsaab.poemlearner.HelloFX",
+            "projectName": "PoemLearner"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - App",
             "request": "launch",
             "mainClass": "com.dsaab.poemlearner.App",

@@ -1,7 +1,10 @@
 package com.dsaab.poemlearner;
 
+import com.dsaab.poemlearner.model.Song;
+import com.dsaab.poemlearner.model.SongUtil;
 import com.dsaab.poemlearner.model.User;
 import com.dsaab.poemlearner.model.UserListWrapper;
+import com.dsaab.poemlearner.view.EasySearchViewController;
 import com.dsaab.poemlearner.view.LoginController;
 import com.dsaab.poemlearner.view.ModeSelectionViewController;
 import com.dsaab.poemlearner.view.SearchSelectionViewController;
@@ -13,6 +16,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.prefs.Preferences;
 
@@ -32,6 +36,7 @@ public class MainApp extends Application {
     private List<User> userData = new ArrayList<User>();
     private final String userDataFilePath = "src\\main\\java\\com\\dsaab\\poemlearner\\data\\userData";
     private File userDataFile;
+    private LinkedList<Song> songList;
 
     @Override
     public void start(Stage primaryStage) {
@@ -40,6 +45,8 @@ public class MainApp extends Application {
 
         setUserDataFilePath(this.userDataFilePath);
         loadUserData();
+
+        loadSongData();
 
         initRootLayout();
         showLogin();
@@ -59,6 +66,19 @@ public class MainApp extends Application {
     public MainApp() {
         // Add some sample data
 
+    }
+
+    private void loadSongData() {
+        System.out.print("Loading song data...");
+        songList = new LinkedList<Song>();
+        SongUtil.parseJSONSongs(songList);
+        System.out.print("Done\n");
+        System.out.println(songList == null);
+
+    }
+
+    public LinkedList<Song> getSongList() {
+        return this.songList;
     }
 
     public List<User> getUserData() {
@@ -157,8 +177,8 @@ public class MainApp extends Application {
             
             rootLayout.setCenter(EasySearchView);
 
-            //EasySearchViewController controller = loader.getController();
-            //controller.setMainApp(this);
+            EasySearchViewController controller = loader.getController();
+            controller.setMainApp(this);
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -20,7 +20,7 @@ public class SearchSelectionViewController {
 
     @FXML
     private void handleAdvancedSearch() {
-
+        mainApp.showAdvancedSearchView();
     }
 
     public void setMainApp(MainApp mainApp) {

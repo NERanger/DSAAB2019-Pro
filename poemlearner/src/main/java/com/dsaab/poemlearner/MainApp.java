@@ -4,6 +4,7 @@ import com.dsaab.poemlearner.model.Song;
 import com.dsaab.poemlearner.model.SongUtil;
 import com.dsaab.poemlearner.model.User;
 import com.dsaab.poemlearner.model.UserListWrapper;
+import com.dsaab.poemlearner.view.AdvancedSearchViewController;
 import com.dsaab.poemlearner.view.EasySearchViewController;
 import com.dsaab.poemlearner.view.LoginController;
 import com.dsaab.poemlearner.view.ModeSelectionViewController;
@@ -115,6 +116,22 @@ public class MainApp extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showAdvancedSearchView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/AdvancedSearchView.fxml"));
+            AnchorPane AdvancedSearchView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(AdvancedSearchView);
+
+            AdvancedSearchViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

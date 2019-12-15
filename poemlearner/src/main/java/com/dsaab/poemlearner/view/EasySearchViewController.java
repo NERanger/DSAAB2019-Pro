@@ -30,7 +30,6 @@ public class EasySearchViewController {
     @FXML
     private void handleSearch() {
         String target = searchBar.getText();
-        System.out.println(mainApp.getSongList() == null);
         List<Song> songList = SongUtil.simpleSearch(mainApp.getSongList(), target);
 
         for(Song song : songList) {
@@ -38,7 +37,6 @@ public class EasySearchViewController {
         }
         resultList.getItems().clear();
         resultList.getItems().addAll(this.searchResult);
-
     }
 
     public void setMainApp(MainApp mainApp) {

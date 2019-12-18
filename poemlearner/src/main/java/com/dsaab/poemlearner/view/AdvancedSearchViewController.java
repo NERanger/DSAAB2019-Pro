@@ -7,7 +7,6 @@ import com.dsaab.poemlearner.MainApp;
 import com.dsaab.poemlearner.model.AdvancedSearchConstrain;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -55,6 +54,16 @@ public class AdvancedSearchViewController {
         gridPane.setVgap(15);
         gridPane.addRow(gpRowIndex, hb);
 
+    }
+
+    @FXML
+    private void handleBack() {
+        this.mainApp.showSearchSelectionView();
+    }
+
+    @FXML
+    private void handleSearch() {
+        //TODO
     }
 
     public void setMainApp(MainApp mainApp) {

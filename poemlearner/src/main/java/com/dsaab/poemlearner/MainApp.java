@@ -5,10 +5,15 @@ import com.dsaab.poemlearner.model.SongUtil;
 import com.dsaab.poemlearner.model.User;
 import com.dsaab.poemlearner.model.UserListWrapper;
 import com.dsaab.poemlearner.view.AdvancedSearchViewController;
+import com.dsaab.poemlearner.view.AuthorSearchViewController;
 import com.dsaab.poemlearner.view.EasySearchViewController;
+import com.dsaab.poemlearner.view.FileSearchViewController;
+import com.dsaab.poemlearner.view.FuzzySearchViewController;
 import com.dsaab.poemlearner.view.LoginController;
 import com.dsaab.poemlearner.view.ModeSelectionViewController;
 import com.dsaab.poemlearner.view.SearchSelectionViewController;
+import com.dsaab.poemlearner.view.SongInfoViewController;
+import com.dsaab.poemlearner.view.TagSearchViewController;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +33,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
@@ -116,6 +122,96 @@ public class MainApp extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showSongInfoView(Song song) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/SongInfoView.fxml"));
+            AnchorPane SongInfoView = (AnchorPane) loader.load();
+            
+            Stage songInfoStage = new Stage();
+            songInfoStage.setTitle("Detailed Information");
+            songInfoStage.initModality(Modality.WINDOW_MODAL);
+            songInfoStage.initOwner(primaryStage);
+
+            Scene scene = new Scene(SongInfoView);
+            songInfoStage.setScene(scene);
+
+            SongInfoViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setStage(songInfoStage);
+            controller.setSong(song);
+
+            songInfoStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showTagSearchView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/TagSearchView.fxml"));
+            AnchorPane TagSearchView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(TagSearchView);
+
+            TagSearchViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showFuzzySearchView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/FuzzySearchView.fxml"));
+            AnchorPane FuzzySearchView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(FuzzySearchView);
+
+            FuzzySearchViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showFileSearchView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/FileSearchView.fxml"));
+            AnchorPane FileSearchView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(FileSearchView);
+
+            FileSearchViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showAuthorSearchView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/AuthorSearchView.fxml"));
+            AnchorPane AuthorSearchView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(AuthorSearchView);
+
+            AuthorSearchViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dsaab.poemlearner.view.FileSearchViewController">
+   <children>
+      <HBox layoutX="74.0" layoutY="42.0" spacing="20.0">
+         <children>
+            <Button layoutX="74.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleChooseFile" text="选择文件" />
+            <Label fx:id="filePath" layoutX="175.0" layoutY="46.0" text="未选择文件">
+               <padding>
+                  <Insets top="3.0" />
+               </padding>
+            </Label>
+         </children>
+      </HBox>
+      <ListView fx:id="searchResult" layoutX="74.0" layoutY="111.0" prefHeight="231.0" prefWidth="453.0" />
+      <Button layoutX="74.0" layoutY="76.0" mnemonicParsing="false" onAction="#handleSearch" text="开始搜索" />
+      <Button layoutX="500.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleBack" text="返回" />
+   </children>
+</AnchorPane>

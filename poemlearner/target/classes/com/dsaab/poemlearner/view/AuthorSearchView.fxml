@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dsaab.poemlearner.view.AuthorSearchViewController">
+   <children>
+      <TextField fx:id="searchBar" layoutX="64.0" layoutY="61.0" prefHeight="23.0" prefWidth="401.0" />
+      <Button layoutX="495.0" layoutY="61.0" mnemonicParsing="false" onAction="#handleSearch" text="搜索" />
+      <Label layoutX="64.0" layoutY="37.0" text="请键入作者名称" />
+      <ListView fx:id="searchResult" layoutX="64.0" layoutY="121.0" prefHeight="199.0" prefWidth="474.0" />
+      <Button layoutX="495.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleBack" text="返回" />
+   </children>
+</AnchorPane>

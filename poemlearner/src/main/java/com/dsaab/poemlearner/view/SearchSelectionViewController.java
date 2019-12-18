@@ -23,6 +23,31 @@ public class SearchSelectionViewController {
         mainApp.showAdvancedSearchView();
     }
 
+    @FXML
+    private void handleBack() {
+        mainApp.showModeSelectionView();
+    }
+
+    @FXML
+    private void handleAuthorSearch() {
+        mainApp.showAuthorSearchView();
+    }
+
+    @FXML
+    private void handleFileSearch() {
+        mainApp.showFileSearchView();
+    }
+
+    @FXML
+    private void handleFuzzySearch() {
+        mainApp.showFuzzySearchView();
+    }
+
+    @FXML
+    private void handleTagSearch() {
+        mainApp.showTagSearchView();
+    }
+
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     } 

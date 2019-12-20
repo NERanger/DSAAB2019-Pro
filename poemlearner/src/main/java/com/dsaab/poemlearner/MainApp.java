@@ -4,6 +4,7 @@ import com.dsaab.poemlearner.model.Song;
 import com.dsaab.poemlearner.model.SongUtil;
 import com.dsaab.poemlearner.model.User;
 import com.dsaab.poemlearner.model.UserListWrapper;
+import com.dsaab.poemlearner.view.AdvancedSearchResultViewController;
 import com.dsaab.poemlearner.view.AdvancedSearchViewController;
 import com.dsaab.poemlearner.view.AuthorSearchViewController;
 import com.dsaab.poemlearner.view.EasySearchViewController;
@@ -13,6 +14,7 @@ import com.dsaab.poemlearner.view.LoginController;
 import com.dsaab.poemlearner.view.ModeSelectionViewController;
 import com.dsaab.poemlearner.view.SearchSelectionViewController;
 import com.dsaab.poemlearner.view.SongInfoViewController;
+import com.dsaab.poemlearner.view.TagManageViewController;
 import com.dsaab.poemlearner.view.TagSearchViewController;
 
 import java.io.File;
@@ -126,6 +128,54 @@ public class MainApp extends Application {
         }
     }
 
+    public boolean showTagManageView(Song song) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/TagManageView.fxml"));
+            AnchorPane TagManageView = (AnchorPane) loader.load();
+            
+            Stage tagManageStage = new Stage();
+            tagManageStage.setTitle("Detailed Information");
+            tagManageStage.initModality(Modality.WINDOW_MODAL);
+            tagManageStage.initOwner(primaryStage);
+
+            Scene scene = new Scene(TagManageView);
+            tagManageStage.setScene(scene);
+
+            TagManageViewController controller = loader.getController();
+            //controller.setMainApp(this);
+            controller.setTagManageStage(tagManageStage);
+            controller.setSong(song);
+            
+
+            tagManageStage.show();
+
+            return controller.isOkClicked();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void showAdvancedSearchResultView(List<Song> songList) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/AdvancedSearchResultView.fxml"));
+            AnchorPane AdvancedSearchResultView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setRight(AdvancedSearchResultView);
+
+            AdvancedSearchResultViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setSongList(songList);
+            controller.setResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void showSongInfoView(Song song) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -142,7 +192,7 @@ public class MainApp extends Application {
 
             SongInfoViewController controller = loader.getController();
             controller.setMainApp(this);
-            controller.setStage(songInfoStage);
+            //controller.setStage(songInfoStage);
             controller.setSong(song);
 
             songInfoStage.show();

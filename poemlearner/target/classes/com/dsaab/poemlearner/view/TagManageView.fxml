@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="427.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dsaab.poemlearner.view.TagManageViewController">
+   <children>
+      <HBox layoutX="51.0" layoutY="28.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <VBox layoutX="31.0" layoutY="7.0" spacing="10.0">
+               <children>
+                  <Label layoutX="42.0" layoutY="7.0" text="当前标签" />
+                  <ListView fx:id="tagList" layoutX="31.0" layoutY="35.0" prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+            <VBox layoutX="241.0" layoutY="35.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="newTag" layoutX="257.0" layoutY="70.0" prefHeight="23.0" prefWidth="125.0">
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Button layoutX="327.0" layoutY="103.0" mnemonicParsing="false" onAction="#handleAddNewTag" prefHeight="23.0" prefWidth="125.0" text="添加新标签" />
+                  <Button layoutX="257.0" layoutY="212.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="23.0" prefWidth="125.0" text="删除选中标签">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handleOK" prefHeight="23.0" prefWidth="125.0" text="确认">
+                     <VBox.margin>
+                        <Insets top="45.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handleCancel" prefWidth="125.0" text="取消" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

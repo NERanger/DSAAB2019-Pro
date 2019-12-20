@@ -3,7 +3,6 @@ package com.dsaab.poemlearner.view;
 import java.util.List;
 
 import com.dsaab.poemlearner.MainApp;
-import com.dsaab.poemlearner.model.SongUtil;
 import com.dsaab.poemlearner.model.Song;
 
 import javafx.fxml.FXML;
@@ -12,23 +11,20 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
-public class AuthorSearchViewController {
-    
-    private MainApp mainApp;
+public class AdvancedSearchResultViewController {
+
     private List<Song> songList;
+    private MainApp mainApp;
 
     private final int ABSTRACT_PARA_BEGIN_INDEX = 0;
     private final int ABSTRACT_PARA_END_INDEX = 5;
 
     @FXML
-    private TextField searchBar;
-    @FXML
-    private ListView<HBox> searchResult;
+    private ListView<HBox> resultList;
 
     @FXML
     private void initialize() {
@@ -36,11 +32,31 @@ public class AuthorSearchViewController {
     }
 
     @FXML
-    private void handleSearch() {
-        String target = searchBar.getText();
-        songList = SongUtil.authorSearch(this.mainApp.getSongList(), target);
+    private void handleCheckSongInfo() {
+        int index = resultList.getSelectionModel().getSelectedIndex();
+        if(index >= 0){
+            this.mainApp.showSongInfoView(this.songList.get(index));
+        } else {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("未选中目标");
+            alert.setContentText("请从列表中选中一个目标");
 
-        searchResult.getItems().clear();
+            alert.showAndWait();
+        }
+        
+    }
+
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+    }
+
+    public void setSongList(List<Song> songList) {
+        this.songList = songList;
+    }
+
+    public void setResultList() {
+        resultList.getItems().clear();
 
         for(Song song : songList) {
             //this.searchResult.add(song.getTitle() + " " + song.getAuthor() + " " + song.getParagraph());
@@ -57,32 +73,7 @@ public class AuthorSearchViewController {
             hb.setSpacing(15);
             hb.getChildren().addAll(title, author, paragraph);
 
-            searchResult.getItems().add(hb);
+            resultList.getItems().add(hb);
         }
-    }
-
-    @FXML
-    private void handleCheckSongInfo() {
-        int index = searchResult.getSelectionModel().getSelectedIndex();
-        if(index >= 0){
-            this.mainApp.showSongInfoView(this.songList.get(index));
-        } else {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("未选中目标");
-            alert.setContentText("请从列表中选中一个目标");
-
-            alert.showAndWait();
-        }
-        
-    }
-
-    @FXML
-    private void handleBack() {
-        this.mainApp.showSearchSelectionView();
-    }
-
-    public void setMainApp(MainApp mainApp) {
-        this.mainApp = mainApp;
     }
 }

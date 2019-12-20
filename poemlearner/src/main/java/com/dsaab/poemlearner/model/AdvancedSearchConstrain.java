@@ -12,7 +12,7 @@ public class AdvancedSearchConstrain {
     private TextField textField;
 
     public AdvancedSearchConstrain( ChoiceBox<String> logicChoiceBox, ChoiceBox<String> fieldChoiceBox, TextField textField) {
-        List<String> fieldChoice = Arrays.asList(FieldChoice.TITLE.getName(), FieldChoice.AUTHOR.getName(), FieldChoice.CONTENT.getName());
+        List<String> fieldChoice = Arrays.asList(FieldChoice.TITLE.getName(), FieldChoice.AUTHOR.getName(), FieldChoice.CONTENT.getName(), FieldChoice.TAG.getName());
         fieldChoiceBox.getItems().addAll(fieldChoice);
 
         if(logicChoiceBox != null){

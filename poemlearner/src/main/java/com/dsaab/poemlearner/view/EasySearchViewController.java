@@ -1,6 +1,5 @@
 package com.dsaab.poemlearner.view;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import com.dsaab.poemlearner.MainApp;

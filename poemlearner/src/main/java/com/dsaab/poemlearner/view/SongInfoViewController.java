@@ -5,12 +5,10 @@ import com.dsaab.poemlearner.model.Song;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 public class SongInfoViewController {
 
     private MainApp mainApp;
-    private Stage songInfoStage;
     private Song song;
 
     @FXML
@@ -34,23 +32,34 @@ public class SongInfoViewController {
 
     @FXML
     private void handleTagManage() {
+        boolean okClicked = mainApp.showTagManageView(song);
 
+        if(okClicked) {
+            setContent();
+        }
+    }
+
+    private void setContent() {
+        title.setText(song.getTitle());
+        title.setWrapText(true);
+        author.setText(song.getAuthor());
+        para.setText(song.getParagraph());
+        para.setWrapText(true);
+
+        String str = new String("标签");
+        for(String s : song.tags){
+            str += " " + s;
+        }
+        tag.setText(str);
+        tag.setWrapText(true);
     }
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
-    public void setStage(Stage stage) {
-        this.songInfoStage = stage;
-    }
-
     public void setSong(Song song) {
         this.song = song;
-
-        this.title.setText(song.getTitle());
-        this.author.setText(song.getAuthor());
-        this.para.setText(song.getParagraph());
-        this.para.setWrapText(true);
+        setContent();
     }
 }

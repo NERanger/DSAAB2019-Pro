@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.dsaab.poemlearner.MainApp;
 import com.dsaab.poemlearner.model.AdvancedSearchConstrain;
+import com.dsaab.poemlearner.model.FieldChoice;
+import com.dsaab.poemlearner.model.Song;
+import com.dsaab.poemlearner.model.SongUtil;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -18,6 +21,7 @@ public class AdvancedSearchViewController {
     private MainApp mainApp;
     private List<AdvancedSearchConstrain> constrainList;
     private int gpRowIndex;
+    private List<Song> songList;
     
 
     @FXML
@@ -63,7 +67,34 @@ public class AdvancedSearchViewController {
 
     @FXML
     private void handleSearch() {
-        //TODO
+        //List<String> keywords = new ArrayList<String>();
+        //List<Boolean> logic = new ArrayList<Boolean>();
+        //List<String> field = new ArrayList<String>();
+
+        int len = constrainList.size();
+
+        String[] keywords = new String[len];
+        String[] field = new String[len];
+        Boolean[] logic = new Boolean[len - 1];
+
+        for(int i = 0; i < len; i++) {
+            //keywords.add(cons.getTextField().getText());
+            keywords[i] = constrainList.get(i).getTextField().getText();
+            //field.add(FieldChoice.getKeyByName(cons.getFieldChoiceBox().getSelectionModel().getSelectedItem()));
+            field[i] = FieldChoice.getKeyByName(constrainList.get(i).getFieldChoiceBox().getSelectionModel().getSelectedItem());
+            ChoiceBox<String> lcb = constrainList.get(i).getLogicChoiceBox();
+            if(lcb != null){
+                if(lcb.getSelectionModel().getSelectedItem().equals(FieldChoice.OR.getName())) {
+                    logic[i - 1] = true;
+                } else {
+                    logic[i - 1] = false;
+                }
+            }
+        }
+
+        songList = SongUtil.keywordSearch(mainApp.getSongList(), keywords, logic, field);
+        mainApp.showAdvancedSearchResultView(songList);
+
     }
 
     public void setMainApp(MainApp mainApp) {

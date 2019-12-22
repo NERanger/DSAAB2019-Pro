@@ -1,10 +1,21 @@
 package com.dsaab.poemlearner.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Song {
 
+    public ArrayList<String> addTags(String s) {
+        tags.add(s);return tags;
+    }
+
+    public ArrayList<String> removeTags(String s) {
+        for (int i = 0; i < tags.size(); i++)
+            if (tags.get(i).equals(s)){
+                tags.remove(i);
+                System.out.println("remove done!");
+            }
+        return tags;
+    }
 
     @Override
     public String toString() {
@@ -15,7 +26,6 @@ public class Song {
                 ", title='" + title + '\'' +
                 ", rhythmic='" + rhythmic + '\'' +
                 ", tags=" + tags +
-                ", s=" + s +
                 '}'+"\n";
     }
 
@@ -24,32 +34,28 @@ public class Song {
     private String id;
     private String title;
     private String rhythmic;
-    public List<String> tags;
-    private Song s;
+    public ArrayList<String> tags;
+    private int percent;
+
+    public int getPercent() {
+        return percent;
+    }
+
+    public void setPercent(int percent) {
+        this.percent = percent;
+    }
 
     public Song() {
         tags=new ArrayList<>();
+        percent=0;
     }
 
-    public List<String> makeTags(ArrayList<String> s) {
+    public ArrayList<String> makeTags(ArrayList<String> s) {
         tags=s;
         return tags;
     }
 
-    public List<String> addTags(String s) {
-        tags.add(s);
-        return tags;
-    }
 
-    public List<String> removeTags(String s) {
-        for (int i = 0; i < tags.size(); i++) {
-            if (tags.get(i).equals(s)){
-                tags.remove(i);
-                System.out.println("remove done!");
-            }
-        }
-        return tags;
-    }
     public String getParagraph() {
         return paragraph;
     }
@@ -88,14 +94,6 @@ public class Song {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public Song getS() {
-        return s;
-    }
-
-    public void setS(Song s) {
-        this.s = s;
     }
 
 }

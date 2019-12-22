@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dsaab.poemlearner.view.SongInfoViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dsaab.poemlearner.view.TagRecmdStudyViewController">
    <children>
       <GridPane hgap="20.0" layoutY="101.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -36,16 +36,18 @@
                      </font></Label>
                </children>
             </VBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="86.0" prefWidth="560.0" GridPane.rowIndex="1">
+            <HBox alignment="CENTER_LEFT" prefHeight="86.0" prefWidth="560.0" spacing="400.0" GridPane.rowIndex="1">
                <children>
                   <Label fx:id="tag" text="Tag" />
+                  <Label fx:id="progress" text="第1首, 共10首" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="100.0" GridPane.rowIndex="2">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.rowIndex="2">
                <children>
-                  <Button mnemonicParsing="false" onAction="#handleAddToLearning" text="添加学习" />
-                  <Label fx:id="tips" />
-                  <Button mnemonicParsing="false" onAction="#handleTagManage" text="管理标签" />
+                  <Button mnemonicParsing="false" onAction="#handleNext" prefHeight="20.0" prefWidth="120.0" text="继续学习下一首" />
+                  <Button mnemonicParsing="false" onAction="#handleFinish" prefHeight="20.0" prefWidth="120.0" text="不想再看到这首" />
+                  <Button mnemonicParsing="false" onAction="#handleTagManage" prefHeight="20.0" prefWidth="120.0" text="标签管理" />
+                  <Button mnemonicParsing="false" onAction="#handleBack" prefHeight="20.0" prefWidth="120.0" text="返回" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

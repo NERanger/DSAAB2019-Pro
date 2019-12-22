@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
 <?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dsaab.poemlearner.view.SongInfoViewController">
    <children>
@@ -41,9 +41,10 @@
                   <Label fx:id="tag" text="Tag" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="2">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="100.0" GridPane.rowIndex="2">
                <children>
                   <Button mnemonicParsing="false" onAction="#handleAddToLearning" text="添加学习" />
+                  <Label fx:id="tips" />
                   <Button mnemonicParsing="false" onAction="#handleTagManage" text="管理标签" />
                </children>
                <padding>

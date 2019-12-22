@@ -13,8 +13,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class SongUtil {
+
+    public static int tangshi=57100,tangshiren=0,songshi=254100,songshiren=0;
+    public static String  stangshiren="",ssongshiren="";
 
     public static void parseJSONSongs(LinkedList<Song> list){
         //LinkedList<Song> list = new LinkedList<>();
@@ -47,7 +53,33 @@ public class SongUtil {
                 e.printStackTrace();
             }
         }
-        //return list;
+        
+        for (int i = 1000; i < 57100; i+=1000) {
+            String infile="src\\main\\java\\com\\dsaab\\poemlearner\\data\\json\\poet.tang." + String.valueOf(i) + ".json";
+            System.out.println(infile);
+            
+            //InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(infile);
+            //System.out.println(is == null);
+            try {
+                File f = new File(infile);
+                InputStream is = new FileInputStream(f);
+
+                InputStreamReader in = new InputStreamReader(is, "utf-8");
+                JsonReader reader = new JsonReader(in);
+                reader.beginArray();
+
+                while (reader.hasNext()) {
+                    list.add(parseSong(reader));
+//                    System.out.println(list.getLast().getAuthor());
+                }
+
+                reader.endArray();
+                in.close();
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static LinkedList<Song> keywordSearch(LinkedList<Song> linkedList, String[] keywords, Boolean[] or,String[] field) {
@@ -140,15 +172,29 @@ public class SongUtil {
         return searchList;
     }
 
-    public static LinkedList<Song> tagSearch(LinkedList<Song> linkedList,String aimconv){
-        String aim=HanLP.convertToTraditionalChinese(aimconv);
+    public static LinkedList<Song> tagSearch(LinkedList<Song> linkedList, User user, String aimconv){
+        //User's own input does not need convert
+        //String aim=HanLP.convertToTraditionalChinese(aimconv);
+
         LinkedList<Song> searchList=new LinkedList<>();
-        for (Song song : linkedList) {
-            if (song.tags != null && song.tags.contains(aim)) {
-                searchList.add(song);
+
+        // for (Song song : linkedList) {
+        //     if (song.tags != null && song.tags.contains(aim)) {
+        //         searchList.add(song);
+        //     }
+        // }
+
+        for(Map.Entry<String, List<String>> entry : user.getSongTagMap().entrySet()){
+            for(String str : entry.getValue()){
+                if(str.contains(aimconv)){
+                    Song song = getSongById(linkedList, entry.getKey());
+                    if(song != null){
+                        searchList.add(song);
+                    }
+                }
             }
- 
         }
+        
         return searchList;
     }
 
@@ -314,4 +360,149 @@ public class SongUtil {
 
         return p;
     }
+
+    public static Song getSongById(LinkedList<Song> linkedList, String id) {
+        for(Song song : linkedList){
+            if(song.getId().equals(id)){
+                return song;
+            }
+        }
+        return null;
+    }
+
+    public static Song randomStudyGetSong(LinkedList<Song> linkedList) {
+        //int i=0;
+        Random r=new Random();
+        int num;
+        Song s;
+        while (true) {
+            num=r.nextInt(linkedList.size());
+             s= linkedList.get(num);
+            if (s.getPercent() == 0) {
+                break;
+            }
+        }
+        return s;
+    }
+
+    public static Song randomGetSong(LinkedList<Song> linkedList) {
+        Random r=new Random();
+        int num;
+        Song s;
+        num=r.nextInt(linkedList.size());
+        s= linkedList.get(num);
+        return s;
+    }
+
+    //两个按钮：true即继续学习（加入复习列表），false即完成学习（不再出现）
+    public static void userStudyProceed(User kevin,Song s,boolean continue_Or_finish) {
+        if (continue_Or_finish) {
+            //学习列表存入id，熟练度，整首诗歌
+            kevin.getLearning().add(s.getId());
+            kevin.getIlearning().add(10);
+            kevin.getAlllearning().add(s.getId());
+        }
+        else {
+            //完成列表存入id，熟练度，整首诗歌
+            kevin.getIlearned().add(100);
+            kevin.getLearned().add(s.getId());
+            kevin.getAlllearned().add(s.getId());
+        }
+    }
+
+    //根据tags推荐诗词，搜索已学习诗词中的tags,找到有相同tags的诗，并输出规定数量的诗
+    //若根据上述tags搜索推荐的诗未达到目标数量，用随机搜素补全
+    //输入：poems(诗库) u(用户) number(推荐诗词的目标数量)
+    //输出：推荐诗词（LinkedList）
+    public static LinkedList<Song> tagRecommend(LinkedList<Song> poems,User u, int number){
+
+        LinkedList<Song> poems_learned = new LinkedList<Song>();
+        for(String str : u.getAlllearned()){
+            poems_learned.add(getSongById(poems, str));
+        }
+
+        
+        LinkedList<Song> poems_recommend = new LinkedList<>();
+        LinkedList<String>  tags= new LinkedList<>();
+        System.out.print("Tags:");
+        for(Song poem_temp:poems_learned){
+            if(poem_temp.tags!=null){
+                for(String tag_temp:poem_temp.tags){
+                    if(!tags.contains(tag_temp)){
+                        tags.add(tag_temp);
+                        System.out.print(" " + tag_temp);
+                    }
+                }
+            }
+        }
+        System.out.println();
+
+
+        int numberOfrecommend=0;
+        for(Song poem_tem:poems){
+            if(poem_tem.tags!=null){
+                for(String tag_temp:poem_tem.tags){
+                    if(tags.contains(tag_temp)){
+                        if(!poems_learned.contains(poem_tem)){
+                            poems_recommend.add(poem_tem);
+                            numberOfrecommend++;
+                        }
+                        break;
+                    }
+                }
+            }
+            if(numberOfrecommend>=number){
+                break;
+            }
+        }
+
+        if(numberOfrecommend<number){
+            System.out.println("已学习诗词中，包含的Tags过少，不足以生成目标数量推荐诗词！");
+            System.out.println("已用随机推荐补全推荐诗词");
+        }
+
+        while(numberOfrecommend<number){
+            Song poem_temps=randomStudyGetSong(poems);
+            if(!poems_recommend.contains(poem_temps)){
+                poems_recommend.add(poem_temps);
+                numberOfrecommend++;
+            }
+        }
+        return poems_recommend;
+    }
+
+    public static Song randomRestudyGetSong(User kevin, LinkedList<Song> linkedList) {
+        Random r=new Random();
+        int num=r.nextInt(kevin.getAlllearning().size());
+        String id = kevin.getAlllearning().get(num);
+        Song ks= getSongById(linkedList, id);
+        return ks;
+    }
+
+    public static void randomRestudyUserProceed(User kevin, Song ks, boolean continue_Or_finish) {
+        if (continue_Or_finish){
+            //熟练度+10
+            ks.setPercent(ks.getPercent()+10);
+            //加满则移除
+            if (ks.getPercent()>=100){
+                kevin.getIlearned().add(100);
+                kevin.getLearned().add(ks.getId());
+                kevin.getAlllearned().add(ks.getId());
+                kevin.getLearning().remove(ks.getId());
+                kevin.getIlearning().remove(kevin.getIndexById(kevin.getLearning(), ks.getId()));
+                kevin.getAlllearning().remove(ks.getId());
+            }
+        }
+        else {
+            //移出学习列表，加入完成列表
+            kevin.getIlearned().add(100);
+            kevin.getLearned().add(ks.getId());
+            kevin.getLearning().remove(ks.getId());
+            kevin.getIlearning().remove(kevin.getIndexById(kevin.getLearning(), ks.getId()));
+            kevin.getAlllearning().remove(ks.getId());
+            kevin.getAlllearned().add(ks.getId());
+
+        }
+    }
+        
 }

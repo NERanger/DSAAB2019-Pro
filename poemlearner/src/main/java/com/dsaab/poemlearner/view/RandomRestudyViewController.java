@@ -4,12 +4,12 @@ import java.util.List;
 
 import com.dsaab.poemlearner.MainApp;
 import com.dsaab.poemlearner.model.Song;
+import com.dsaab.poemlearner.model.SongUtil;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class SongInfoViewController {
-
+public class RandomRestudyViewController {
     private MainApp mainApp;
     private Song song;
 
@@ -22,22 +22,13 @@ public class SongInfoViewController {
     @FXML
     private Label tag;
     @FXML
-    private Label tips;
+    private Label exp;
 
     @FXML
     private void initialize() {
 
     }
-
-    @FXML
-    private void handleAddToLearning() {
-        mainApp.getCurrentUser().getLearning().add(song.getId());
-        mainApp.getCurrentUser().getIlearning().add(0);
-        mainApp.getCurrentUser().getAlllearning().add(song.getId());
-
-        tips.setText("已加入学习列表");
-    }
-
+    
     @FXML
     private void handleTagManage() {
         boolean okClicked = mainApp.showTagManageView(song);
@@ -45,6 +36,27 @@ public class SongInfoViewController {
         if(okClicked) {
             setContent();
         }
+    }
+
+    @FXML
+    private void handleNext() {
+        SongUtil.randomRestudyUserProceed(mainApp.getCurrentUser(), this.song, true);
+        Song nextSong = SongUtil.randomRestudyGetSong(mainApp.getCurrentUser(), mainApp.getSongList());
+
+        mainApp.showStudyView(nextSong);
+    }
+
+    @FXML
+    private void handleFinish() {
+        SongUtil.randomRestudyUserProceed(mainApp.getCurrentUser(), this.song, false);
+        Song nextSong = SongUtil.randomRestudyGetSong(mainApp.getCurrentUser(), mainApp.getSongList());
+
+        mainApp.showStudyView(nextSong);
+    }
+
+    @FXML
+    private void handleBack() {
+        mainApp.showStudySelectionView();
     }
 
     private void setContent() {
@@ -63,6 +75,8 @@ public class SongInfoViewController {
         }
         tag.setText(str);
         tag.setWrapText(true);
+
+        exp.setText("熟练度-" + mainApp.getCurrentUser().getExpById(song.getId()));
     }
 
     public void setMainApp(MainApp mainApp) {

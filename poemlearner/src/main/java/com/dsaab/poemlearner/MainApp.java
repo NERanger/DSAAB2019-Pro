@@ -12,14 +12,20 @@ import com.dsaab.poemlearner.view.FileSearchViewController;
 import com.dsaab.poemlearner.view.FuzzySearchViewController;
 import com.dsaab.poemlearner.view.LoginController;
 import com.dsaab.poemlearner.view.ModeSelectionViewController;
+import com.dsaab.poemlearner.view.RandomRestudyViewController;
+import com.dsaab.poemlearner.view.RandomStudyViewController;
 import com.dsaab.poemlearner.view.SearchSelectionViewController;
 import com.dsaab.poemlearner.view.SongInfoViewController;
+import com.dsaab.poemlearner.view.StudyListViewController;
+import com.dsaab.poemlearner.view.StudySelectionViewController;
 import com.dsaab.poemlearner.view.TagManageViewController;
+import com.dsaab.poemlearner.view.TagRecmdStudyViewController;
 import com.dsaab.poemlearner.view.TagSearchViewController;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -46,6 +52,7 @@ public class MainApp extends Application {
     private final String userDataFilePath = "src\\main\\java\\com\\dsaab\\poemlearner\\data\\userData";
     private File userDataFile;
     private LinkedList<Song> songList;
+    private User currentUser;
 
     @Override
     public void start(Stage primaryStage) {
@@ -82,7 +89,7 @@ public class MainApp extends Application {
         songList = new LinkedList<Song>();
         SongUtil.parseJSONSongs(songList);
         System.out.print("Done\n");
-        System.out.println(songList == null);
+        //System.out.println(songList == null);
 
     }
 
@@ -128,6 +135,90 @@ public class MainApp extends Application {
         }
     }
 
+    public void showRandomRestudyView(Song song) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/RandomRestudyView.fxml"));
+            AnchorPane RandomRestudyView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(RandomRestudyView);
+
+            RandomRestudyViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setSong(song);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showStudyListView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/StudyListView.fxml"));
+            AnchorPane StudyListView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(StudyListView);
+
+            StudyListViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.generateSongList(150);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showTagRecmdStudyView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/TagRecmdStudyView.fxml"));
+            AnchorPane TagRecmdStudyView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(TagRecmdStudyView);
+
+            TagRecmdStudyViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setSongList(SongUtil.tagRecommend(this.getSongList(), this.getCurrentUser(), 10));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showStudyView(Song song) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/RandomStudyView.fxml"));
+            AnchorPane RandomStudyView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(RandomStudyView);
+
+            RandomStudyViewController controller = loader.getController();
+            controller.setMainApp(this);
+            controller.setSong(song);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showStudySelectionView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/StudySelectionView.fxml"));
+            AnchorPane StudySelectionView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(StudySelectionView);
+
+            StudySelectionViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean showTagManageView(Song song) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -143,7 +234,7 @@ public class MainApp extends Application {
             tagManageStage.setScene(scene);
 
             TagManageViewController controller = loader.getController();
-            //controller.setMainApp(this);
+            controller.setMainApp(this);
             controller.setTagManageStage(tagManageStage);
             controller.setSong(song);
             
@@ -429,5 +520,37 @@ public class MainApp extends Application {
             // Update the stage title.
             primaryStage.setTitle("MainApp");
         }
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public void clearFileContent(File file) {
+        try {
+            if(file.exists()) {
+                FileWriter fileWriter =new FileWriter(file);
+                fileWriter.write("");     
+                fileWriter.flush();
+                fileWriter.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    } 
+
+    @Override
+    public void stop(){
+        System.out.print("App is closing, Saving user data...");
+        this.clearFileContent(this.userDataFile);
+
+        this.saveUserDataToFile(this.userDataFile);
+
+        System.out.print("Done\n");
     }
 }

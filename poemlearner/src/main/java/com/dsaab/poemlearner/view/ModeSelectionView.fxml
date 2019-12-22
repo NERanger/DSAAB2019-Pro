@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
 <?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dsaab.poemlearner.view.ModeSelectionViewController">
    <children>
-      <Label layoutX="76.0" layoutY="49.0" text="模式选择">
-         <font>
-            <Font size="27.0" />
-         </font>
-      </Label>
-      <Button layoutX="209.0" layoutY="99.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="72.0" prefWidth="183.0" text="诗词搜索" />
-      <Button layoutX="209.0" layoutY="194.0" mnemonicParsing="false" onAction="#handleStudyTask" prefHeight="72.0" prefWidth="183.0" text="学习任务" />
-      <Button layoutX="209.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleShowProgress" prefHeight="72.0" prefWidth="183.0" text="进度展示" />
+      <VBox layoutX="209.0" layoutY="99.0" spacing="20.0">
+         <children>
+            <Button layoutX="209.0" layoutY="99.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="72.0" prefWidth="183.0" text="诗词搜索" />
+            <Button layoutX="209.0" layoutY="194.0" mnemonicParsing="false" onAction="#handleStudyTask" prefHeight="72.0" prefWidth="183.0" text="学习任务" />
+            <Button layoutX="209.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleShowProgress" prefHeight="72.0" prefWidth="183.0" text="进度展示" />
+         </children>
+      </VBox>
+      <Label fx:id="info" layoutX="48.0" layoutY="35.0" text="Label" />
    </children>
 </AnchorPane>

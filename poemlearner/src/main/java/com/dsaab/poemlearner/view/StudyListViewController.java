@@ -1,5 +1,6 @@
 package com.dsaab.poemlearner.view;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import com.dsaab.poemlearner.MainApp;
@@ -12,38 +13,58 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
-public class TagSearchViewController {
+public class StudyListViewController {
 
     private MainApp mainApp;
     private List<Song> songList;
-    //private List<String> searchResult;
 
     private final int ABSTRACT_PARA_BEGIN_INDEX = 0;
     private final int ABSTRACT_PARA_END_INDEX = 5;
 
     @FXML
-    private TextField searchBar;
+    private ListView<HBox> studyList;
     @FXML
-    private ListView<HBox> resultList;
+    private Label label;
 
     @FXML
     private void initialize() {
+        songList = new LinkedList<Song>();
     }
 
     @FXML
-    private void handleSearch() {
-        String target = searchBar.getText();
-        songList = SongUtil.tagSearch(mainApp.getSongList(), mainApp.getCurrentUser(), target);
+    private void handleBack() {
+        mainApp.showStudySelectionView();
+    }
 
-        resultList.getItems().clear();
+    @FXML
+    private void handleCheckSongInfo() {
+        int index = studyList.getSelectionModel().getSelectedIndex();
+        if(index >= 0){
+            this.mainApp.showSongInfoView(this.songList.get(index));
+        } else {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("未选中目标");
+            alert.setContentText("请从列表中选中一个目标");
 
-        for(Song song : songList) {
-            //this.searchResult.add(song.getTitle() + " " + song.getAuthor() + " " + song.getParagraph());
+            alert.showAndWait();
+        }
+        
+    }
+
+    public void generateSongList(int num) {
+
+        studyList.getItems().clear();
+
+        for(int i = 0; i < num; i++){
+            Song song = SongUtil.randomGetSong(mainApp.getSongList());
+
+            songList.add(song);
+
             Label title = new Label(song.getTitle());
             title.setFont(new Font(30));
             Label author = new Label(song.getAuthor());
@@ -57,28 +78,11 @@ public class TagSearchViewController {
             hb.setSpacing(15);
             hb.getChildren().addAll(title, author, paragraph);
 
-            resultList.getItems().add(hb);
+            studyList.getItems().add(hb);
         }
-    }
 
-    @FXML
-    private void handleCheckSongInfo() {
-        int index = resultList.getSelectionModel().getSelectedIndex();
-        if(index >= 0){
-            this.mainApp.showSongInfoView(this.songList.get(index));
-        } else {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("未选中目标");
-            alert.setContentText("请从列表中选中一个目标");
-
-            alert.showAndWait();
-        }
-    }
-
-    @FXML
-    private void handleBack() {
-        this.mainApp.showSearchSelectionView();
+        label.setText("共显示" + songList.size() + "首诗词");
+        label.setWrapText(true);
     }
 
     public void setMainApp(MainApp mainApp) {

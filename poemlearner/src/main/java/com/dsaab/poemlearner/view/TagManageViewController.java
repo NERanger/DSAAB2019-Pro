@@ -1,5 +1,9 @@
 package com.dsaab.poemlearner.view;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import com.dsaab.poemlearner.MainApp;
 import com.dsaab.poemlearner.model.Song;
 
 import javafx.fxml.FXML;
@@ -14,6 +18,7 @@ public class TagManageViewController {
     private boolean okClicked = false;
     private Song song;
     private Stage tagManageStage;
+    private MainApp mainApp;
 
     @FXML
     private ListView<String> tagList;
@@ -27,9 +32,18 @@ public class TagManageViewController {
 
     @FXML
     private void handleOK() {
-        song.tags.clear();
-        song.tags.addAll(tagList.getItems());
-
+        //song.tags.clear();
+        //song.tags.addAll(tagList.getItems());
+        List<String> userTagList = mainApp.getCurrentUser().getSongTagMap().get(song.getId());
+        if(userTagList != null){
+            userTagList.clear();
+            userTagList.addAll(tagList.getItems());
+        } else {
+            List<String> list = new LinkedList<String>();
+            list.addAll(tagList.getItems());
+            mainApp.getCurrentUser().getSongTagMap().put(song.getId(), list);
+        }
+        
         okClicked = true;
         tagManageStage.close();
 
@@ -43,7 +57,7 @@ public class TagManageViewController {
     @FXML
     private void handleAddNewTag() {
         String str = newTag.getText();
-        if(str != null){
+        if(str != null && str != ""){
             tagList.getItems().add(str);
         }
     }
@@ -70,10 +84,10 @@ public class TagManageViewController {
 
     public void setSong(Song song) {
         this.song = song;
-        if(song.tags != null){
-            for(String s : song.tags){
-                tagList.getItems().add(s);
-            }
+
+        List<String> l = mainApp.getCurrentUser().getSongTagMap().get(song.getId());
+        if(l != null){
+                tagList.getItems().addAll(l);
         } else {
             tagList.getItems().clear();
         }
@@ -81,5 +95,9 @@ public class TagManageViewController {
 
     public boolean isOkClicked() {
         return okClicked;
+    }
+
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
     }
 }

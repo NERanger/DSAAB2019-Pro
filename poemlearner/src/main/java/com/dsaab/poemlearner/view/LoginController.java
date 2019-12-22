@@ -32,6 +32,7 @@ public class LoginController {
                 if(user.getPassword().equals(passwordField.getText())) {
                     notMatchLabel.setText("");
                     isValidated = true;
+                    mainApp.setCurrentUser(user);
                     mainApp.showModeSelectionView();
                 }
             }

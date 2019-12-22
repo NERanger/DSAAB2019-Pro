@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dsaab.poemlearner.view.SongInfoViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dsaab.poemlearner.view.RandomRestudyViewController">
    <children>
       <GridPane hgap="20.0" layoutY="101.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -15,6 +15,7 @@
         <rowConstraints>
           <RowConstraints maxHeight="231.0" minHeight="10.0" prefHeight="228.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -41,16 +42,18 @@
                   <Label fx:id="tag" text="Tag" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="100.0" GridPane.rowIndex="2">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.rowIndex="3">
                <children>
-                  <Button mnemonicParsing="false" onAction="#handleAddToLearning" text="添加学习" />
-                  <Label fx:id="tips" />
-                  <Button mnemonicParsing="false" onAction="#handleTagManage" text="管理标签" />
+                  <Button mnemonicParsing="false" onAction="#handleNext" prefHeight="20.0" prefWidth="120.0" text="继续学习下一首" />
+                  <Button mnemonicParsing="false" onAction="#handleFinish" prefHeight="20.0" prefWidth="120.0" text="不想再看到这首" />
+                  <Button mnemonicParsing="false" onAction="#handleTagManage" prefHeight="20.0" prefWidth="120.0" text="标签管理" />
+                  <Button mnemonicParsing="false" onAction="#handleBack" prefHeight="20.0" prefWidth="120.0" text="返回" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </HBox>
+            <Label fx:id="exp" text="熟练度" GridPane.rowIndex="2" />
          </children>
          <padding>
             <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />

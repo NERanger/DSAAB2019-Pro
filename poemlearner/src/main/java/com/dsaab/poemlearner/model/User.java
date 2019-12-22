@@ -1,9 +1,12 @@
 package com.dsaab.poemlearner.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-public class User implements Serializable{
+public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -13,31 +16,32 @@ public class User implements Serializable{
 
     private LinkedList<String> learning;//存正在学习的诗歌的id
     private LinkedList<Integer> ilearning;//存正在学习的诗歌的熟练度
-    private LinkedList<Song> alllearning;//存正在学习的诗
+    private LinkedList<String> alllearning;//存正在学习的诗
 
     private LinkedList<String> learned;
     private LinkedList<Integer> ilearned;
-    private LinkedList<Song> alllearned;//存完成学习的诗歌
-    private LinkedList<Song> tagsRecommend;//根据tags推荐诗
+    private LinkedList<String> alllearned;//存完成学习的诗歌
+    private LinkedList<String> tagsRecommend;//根据tags推荐诗
+
+    private Map<String, List<String>> songTagMap;
 
 
     private int plannew;//计划今日新学
     private int planreview;//计划今日复习
 
-
-    public LinkedList<Song> getAlllearning() {
+    public LinkedList<String> getAlllearning() {
         return alllearning;
     }
 
-    public void setAlllearning(LinkedList<Song> alllearning) {
+    public void setAlllearning(LinkedList<String> alllearning) {
         this.alllearning = alllearning;
     }
 
-    public LinkedList<Song> getAlllearned() {
+    public LinkedList<String> getAlllearned() {
         return alllearned;
     }
 
-    public void setAlllearned(LinkedList<Song> alllearned) {
+    public void setAlllearned(LinkedList<String> alllearned) {
         this.alllearned = alllearned;
     }
 
@@ -90,11 +94,11 @@ public class User implements Serializable{
         this.planreview = planreview;
     }
 
-    public void setTagsRecommend(LinkedList<Song> tagsRecommend) {
+    public void setTagsRecommend(LinkedList<String> tagsRecommend) {
         this.tagsRecommend = tagsRecommend;
     }
 
-    public LinkedList<Song> getTagsRecommend() {
+    public LinkedList<String> getTagsRecommend() {
         return tagsRecommend;
     }
 
@@ -106,6 +110,7 @@ public class User implements Serializable{
         ilearning=new LinkedList<>();
         alllearned=new LinkedList<>();
         alllearning=new LinkedList<>();
+        songTagMap = new HashMap<String, List<String>>();
         plannew=10;
         planreview=10;
     }
@@ -119,6 +124,7 @@ public class User implements Serializable{
         ilearning=new LinkedList<>();
         alllearned=new LinkedList<>();
         alllearning=new LinkedList<>();
+        songTagMap = new HashMap<String, List<String>>();
         plannew=10;
         planreview=10;
     }
@@ -137,5 +143,36 @@ public class User implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Map<String, List<String>> getSongTagMap() {
+        return songTagMap;
+    }
+
+    public void setSongTagMap(Map<String, List<String>> songTagMap) {
+        this.songTagMap = songTagMap;
+    }
+
+    public Integer getExpById(String id) {
+
+        //System.out.println(this.learning);
+
+        if(this.learning.size() != 0) {
+            for(int i = 0; i < this.learning.size(); i++){
+                if(this.learning.get(i).equals(id)){
+                    return this.ilearning.get(i);
+                }
+            }
+        }
+        return 0;
+    }
+
+    public Integer getIndexById(List<String> idList, String id) {
+        for(String str : idList){
+            if(str.equals(id)){
+                return idList.indexOf(str);
+            }
+        }
+        return null;
     }
 }

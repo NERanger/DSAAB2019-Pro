@@ -41,7 +41,7 @@ public class RandomStudyViewController {
 
     @FXML
     private void handleNext() {
-        SongUtil.userStudyProceed(mainApp.getCurrentUser(), this.song, true);
+        SongUtil.userStudyProceed(mainApp.getCurrentUser(), this.song, true, mainApp.getCurrentDay());
         Song nextSong = SongUtil.randomStudyGetSong(mainApp.getSongList());
 
         mainApp.showStudyView(nextSong);
@@ -49,7 +49,7 @@ public class RandomStudyViewController {
 
     @FXML
     private void handleFinish() {
-        SongUtil.userStudyProceed(mainApp.getCurrentUser(), this.song, false);
+        SongUtil.userStudyProceed(mainApp.getCurrentUser(), this.song, false, mainApp.getCurrentDay());
         Song nextSong = SongUtil.randomStudyGetSong(mainApp.getSongList());
 
         mainApp.showStudyView(nextSong);

@@ -6,13 +6,25 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dsaab.poemlearner.view.ModeSelectionViewController">
    <children>
-      <VBox layoutX="209.0" layoutY="99.0" spacing="20.0">
+      <GridPane layoutX="209.0" layoutY="99.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="202.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="198.0" minWidth="10.0" prefWidth="198.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
+            <Button layoutX="209.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleShowProgress" prefHeight="72.0" prefWidth="183.0" text="进度展示" GridPane.rowIndex="1" />
             <Button layoutX="209.0" layoutY="99.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="72.0" prefWidth="183.0" text="诗词搜索" />
-            <Button layoutX="209.0" layoutY="194.0" mnemonicParsing="false" onAction="#handleStudyTask" prefHeight="72.0" prefWidth="183.0" text="学习任务" />
-            <Button layoutX="209.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleShowProgress" prefHeight="72.0" prefWidth="183.0" text="进度展示" />
+            <Button layoutX="209.0" layoutY="191.0" mnemonicParsing="false" onAction="#handleStudyTask" prefHeight="72.0" prefWidth="183.0" text="学习任务" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#handleTagImport" prefHeight="72.0" prefWidth="183.0" text="标签导入" GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" onAction="#handlePK" prefHeight="72.0" prefWidth="183.0" text="在线PK" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onAction="#handleWordCloud" prefHeight="72.0" prefWidth="183.0" text="词云分析" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
-      </VBox>
+      </GridPane>
       <Label fx:id="info" layoutX="48.0" layoutY="35.0" text="Label" />
    </children>
 </AnchorPane>

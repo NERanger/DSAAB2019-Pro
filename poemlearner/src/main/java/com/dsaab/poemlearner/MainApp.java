@@ -12,15 +12,19 @@ import com.dsaab.poemlearner.view.FileSearchViewController;
 import com.dsaab.poemlearner.view.FuzzySearchViewController;
 import com.dsaab.poemlearner.view.LoginController;
 import com.dsaab.poemlearner.view.ModeSelectionViewController;
+import com.dsaab.poemlearner.view.PKViewController;
+import com.dsaab.poemlearner.view.ProgressViewController;
 import com.dsaab.poemlearner.view.RandomRestudyViewController;
 import com.dsaab.poemlearner.view.RandomStudyViewController;
 import com.dsaab.poemlearner.view.SearchSelectionViewController;
 import com.dsaab.poemlearner.view.SongInfoViewController;
 import com.dsaab.poemlearner.view.StudyListViewController;
 import com.dsaab.poemlearner.view.StudySelectionViewController;
+import com.dsaab.poemlearner.view.TagImportViewController;
 import com.dsaab.poemlearner.view.TagManageViewController;
 import com.dsaab.poemlearner.view.TagRecmdStudyViewController;
 import com.dsaab.poemlearner.view.TagSearchViewController;
+import com.dsaab.poemlearner.view.WordCloudViewController;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,9 +33,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.prefs.Preferences;
 
 import javafx.application.Application;
@@ -53,16 +61,20 @@ public class MainApp extends Application {
     private File userDataFile;
     private LinkedList<Song> songList;
     private User currentUser;
+    //private String currentDay="20191201";
+    private SimpleDateFormat format_day = new SimpleDateFormat("yyyyMMdd");
+    private Calendar currentDay = Calendar.getInstance();;
 
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("AddressApp");
 
+        SongUtil.setMainApp(this);
+        loadSongData();
+
         setUserDataFilePath(this.userDataFilePath);
         loadUserData();
-
-        loadSongData();
 
         initRootLayout();
         showLogin();
@@ -81,7 +93,18 @@ public class MainApp extends Application {
      */
     public MainApp() {
         // Add some sample data
+    }
 
+    public String getStringDate(Calendar day){
+        return format_day.format(day.getTime());
+    }
+
+    public void setDay(String day) throws ParseException {
+        this.currentDay.setTime(format_day.parse(day));
+    }
+
+    public Calendar getCurrentDay() {
+        return this.currentDay;
     }
 
     private void loadSongData() {
@@ -112,11 +135,59 @@ public class MainApp extends Application {
             try {
                 this.userDataFile.createNewFile();
                 this.userData.add(new User("admin", "admin"));
+                this.userData.add(new User("a", "a"));
+                this.userData.add(new User("b", "b"));
+
+                Random ran = new Random();
+
+                for(User user : this.userData) {
+                    this.setCurrentUser(user);
+                    for(int i = 0; i < 100; i++){
+                        String day = randomDate();
+                        setDay(day);
+                        Song s = SongUtil.randomStudyGetSong(this.songList);
+                        boolean b = ran.nextBoolean();
+                        SongUtil.userStudyProceed(user, s, b, this.currentDay);
+                        System.out.println(user.getUserName() + " " + s.getId() + " " + b + this.getStringDate(this.currentDay));
+                        user.addTag(s.getId(), b ? "学习中":"已完成");
+                    }
+                }
+                
+
                 this.saveUserDataToFile(this.userDataFile);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public String randomDate(){
+        Random rnd=new Random();
+
+        String monthStr = new String();
+        String dayStr = new String();
+
+        int year=rnd.nextInt(18)+2010;  //生成[2000,2017]的整数；年
+        int month=rnd.nextInt(12)+1;   //生成[1,12]的整数；月 
+        int day=rnd.nextInt(30)+1;       //生成[1,30)的整数；日
+
+        if(month < 10) {
+            monthStr = "0" + month;
+        }else{
+            monthStr = Integer.toString(month);
+        }
+        
+        if(day < 10) {
+            dayStr = "0" + day;
+        }else{
+            dayStr = Integer.toString(day);
+        }
+        return year+monthStr+dayStr;
+    }
+
+    public boolean isWordCloudExsit() {
+        File image = new File("src\\main\\java\\com\\dsaab\\poemlearner\\image\\Worldcloud.png");
+        return image.exists();
     }
 
     public void initRootLayout() {
@@ -131,6 +202,78 @@ public class MainApp extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showWordCloudView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/WordCloudView.fxml"));
+            AnchorPane WordCloudView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(WordCloudView);
+
+            WordCloudViewController controller = loader.getController();
+            if(!isWordCloudExsit()){
+                List<String> list = new LinkedList<String>();
+                list.addAll(this.getCurrentUser().getLearning());
+                list.addAll(this.getCurrentUser().getLearned());
+                SongUtil.generateWordCloud(this.getCurrentUser().getLearning());
+            }
+            
+            controller.setMainApp(this);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showPKView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/PKView.fxml"));
+            AnchorPane PKView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(PKView);
+
+            PKViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showProgressView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/ProgressView.fxml"));
+            AnchorPane ProgressView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(ProgressView);
+
+            ProgressViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showTagImportView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/TagImportView.fxml"));
+            AnchorPane TagImportView = (AnchorPane) loader.load();
+            
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(TagImportView);
+
+            TagImportViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -7,7 +7,9 @@ import com.dsaab.poemlearner.model.Song;
 import com.dsaab.poemlearner.model.SongUtil;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 
 public class RandomRestudyViewController {
     private MainApp mainApp;
@@ -40,18 +42,37 @@ public class RandomRestudyViewController {
 
     @FXML
     private void handleNext() {
-        SongUtil.randomRestudyUserProceed(mainApp.getCurrentUser(), this.song, true);
+        SongUtil.randomRestudyUserProceed(mainApp.getCurrentUser(), this.song, true, mainApp.getCurrentDay());
         Song nextSong = SongUtil.randomRestudyGetSong(mainApp.getCurrentUser(), mainApp.getSongList());
 
-        mainApp.showStudyView(nextSong);
+        if(nextSong != null){
+            mainApp.showStudyView(nextSong);
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("INFO");
+            alert.setHeaderText("已完成复习");
+            alert.setContentText("请返回");
+
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void handleFinish() {
-        SongUtil.randomRestudyUserProceed(mainApp.getCurrentUser(), this.song, false);
+        SongUtil.randomRestudyUserProceed(mainApp.getCurrentUser(), this.song, false, mainApp.getCurrentDay());
         Song nextSong = SongUtil.randomRestudyGetSong(mainApp.getCurrentUser(), mainApp.getSongList());
 
-        mainApp.showStudyView(nextSong);
+        if(nextSong != null){
+            mainApp.showStudyView(nextSong);
+        } else {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("INFO");
+            alert.setHeaderText("已完成复习");
+            alert.setContentText("请返回");
+
+            alert.showAndWait();
+        }
+        
     }
 
     @FXML

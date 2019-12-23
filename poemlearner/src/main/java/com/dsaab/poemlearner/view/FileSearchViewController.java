@@ -78,11 +78,11 @@ public class FileSearchViewController {
                     searchResult.getItems().add(hb);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setHeaderText("无法读取文件");
+                alert.setHeaderText("读取文件出错");
 
                 alert.showAndWait();
             }

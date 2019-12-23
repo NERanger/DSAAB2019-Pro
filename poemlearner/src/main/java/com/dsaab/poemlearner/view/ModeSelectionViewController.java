@@ -30,7 +30,23 @@ public class ModeSelectionViewController {
 
     @FXML
     private void handleShowProgress() {
+        mainApp.showProgressView();
+    }
 
+    @FXML
+    private void handleTagImport() {
+        mainApp.showTagImportView();
+
+    }
+
+    @FXML
+    private void handlePK() {
+        mainApp.showPKView();
+    }
+
+    @FXML
+    private void handleWordCloud() {
+        mainApp.showWordCloudView();
     }
 
     public void setMainApp(MainApp mainApp) {

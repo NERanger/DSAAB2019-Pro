@@ -14,6 +14,7 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="231.0" minHeight="10.0" prefHeight="228.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
         </rowConstraints>
@@ -36,12 +37,13 @@
                      </font></Label>
                </children>
             </VBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="86.0" prefWidth="560.0" GridPane.rowIndex="1">
+            <HBox alignment="CENTER_LEFT" prefHeight="86.0" prefWidth="560.0" spacing="250.0" GridPane.rowIndex="2">
                <children>
                   <Label fx:id="tag" text="Tag" />
+                  <Label fx:id="exp" text="熟练度" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="100.0" GridPane.rowIndex="2">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="100.0" GridPane.rowIndex="3">
                <children>
                   <Button mnemonicParsing="false" onAction="#handleAddToLearning" text="添加学习" />
                   <Label fx:id="tips" />
@@ -51,6 +53,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </HBox>
+            <Label fx:id="latestStudyDate" text="最近学习日期" GridPane.rowIndex="1" />
          </children>
          <padding>
             <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />

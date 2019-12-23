@@ -43,7 +43,7 @@ public class TagRecmdStudyViewController {
 
     @FXML
     private void handleNext() {
-        SongUtil.userStudyProceed(mainApp.getCurrentUser(), this.curSong, true);
+        SongUtil.userStudyProceed(mainApp.getCurrentUser(), this.curSong, true, mainApp.getCurrentDay());
         curIndex++;
         if(curIndex < songList.size()){
             setSong(songList.get(curIndex));
@@ -56,7 +56,7 @@ public class TagRecmdStudyViewController {
 
     @FXML
     private void handleFinish() {
-        SongUtil.userStudyProceed(mainApp.getCurrentUser(), this.curSong, false);
+        SongUtil.userStudyProceed(mainApp.getCurrentUser(), this.curSong, false, mainApp.getCurrentDay());
         curIndex++;
         if(curIndex < songList.size()){
             setSong(songList.get(curIndex));

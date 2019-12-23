@@ -42,23 +42,29 @@ public class AuthorSearchViewController {
 
         searchResult.getItems().clear();
 
-        for(Song song : songList) {
-            //this.searchResult.add(song.getTitle() + " " + song.getAuthor() + " " + song.getParagraph());
-            Label title = new Label(song.getTitle());
-            title.setFont(new Font(30));
-            Label author = new Label(song.getAuthor());
-            author.setFont(new Font(20));
-            Label paragraph = new Label(song.getParagraph().substring(this.ABSTRACT_PARA_BEGIN_INDEX, this.ABSTRACT_PARA_END_INDEX) + " ...");
-            paragraph.setFont(new Font(15));
-
-            HBox hb = new HBox();
-            hb.setAlignment(Pos.BOTTOM_LEFT);
-            hb.setPadding(new Insets(2,5,2,5));
-            hb.setSpacing(15);
-            hb.getChildren().addAll(title, author, paragraph);
-
-            searchResult.getItems().add(hb);
+        try {
+            for(Song song : songList) {
+                //this.searchResult.add(song.getTitle() + " " + song.getAuthor() + " " + song.getParagraph());
+                Label title = new Label(song.getTitle());
+                title.setFont(new Font(30));
+                Label author = new Label(song.getAuthor());
+                author.setFont(new Font(20));
+                Label paragraph = new Label(song.getParagraph().substring(this.ABSTRACT_PARA_BEGIN_INDEX, this.ABSTRACT_PARA_END_INDEX) + " ...");
+                paragraph.setFont(new Font(15));
+    
+                HBox hb = new HBox();
+                hb.setAlignment(Pos.BOTTOM_LEFT);
+                hb.setPadding(new Insets(2,5,2,5));
+                hb.setSpacing(15);
+                hb.getChildren().addAll(title, author, paragraph);
+    
+                searchResult.getItems().add(hb);
+            }
+        } catch (Exception e) {
+            
         }
+
+        
     }
 
     @FXML

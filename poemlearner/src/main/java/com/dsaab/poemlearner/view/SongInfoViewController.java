@@ -1,5 +1,6 @@
 package com.dsaab.poemlearner.view;
 
+import java.util.Calendar;
 import java.util.List;
 
 import com.dsaab.poemlearner.MainApp;
@@ -23,6 +24,10 @@ public class SongInfoViewController {
     private Label tag;
     @FXML
     private Label tips;
+    @FXML
+    private Label exp;
+    @FXML
+    private Label latestStudyDate;
 
     @FXML
     private void initialize() {
@@ -63,6 +68,18 @@ public class SongInfoViewController {
         }
         tag.setText(str);
         tag.setWrapText(true);
+
+        exp.setText("熟练度 - " + mainApp.getCurrentUser().getExpById(song.getId()));
+
+        Calendar day = mainApp.getCurrentUser().getSongDateMap().get(song.getId());
+        if(day != null) {
+            latestStudyDate.setText("最近学习日期: " + mainApp.getStringDate(day));
+            //System.out.println(mainApp.getCurrentUser().getSongDateMap().toString());
+            //mainApp.getCurrentUser().printStudyDate();
+        } else {
+            latestStudyDate.setText("最近学习日期: -");
+        }
+        
     }
 
     public void setMainApp(MainApp mainApp) {

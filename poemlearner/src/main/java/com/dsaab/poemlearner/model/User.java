@@ -1,6 +1,7 @@
 package com.dsaab.poemlearner.model;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,10 +25,30 @@ public class User implements Serializable {
     private LinkedList<String> tagsRecommend;//根据tags推荐诗
 
     private Map<String, List<String>> songTagMap;
-
+    private Map<String, Calendar> songDateMap;
 
     private int plannew;//计划今日新学
     private int planreview;//计划今日复习
+
+    public int rank_learned;//已完成学习诗词的数量排名
+    public int rank_learning;//正在学习诗词的总数量的排名
+    public int rank_todaylearned;//今日学习诗词的数量排名
+
+    //已完成学习诗词的数量
+    public int number_alllearned(){
+        return learned.size();
+    }
+
+    //正在学习诗词的总数量
+    public int number_alllearning(){
+        return learning.size();
+
+    }
+
+    //今日学习诗词的数量
+    public int number_todaylearned(){
+        return 10;
+    }
 
     public LinkedList<String> getAlllearning() {
         return alllearning;
@@ -46,7 +67,7 @@ public class User implements Serializable {
     }
 
 
-    public LinkedList<String> getLearning() {
+    public List<String> getLearning() {
         return learning;
     }
 
@@ -62,7 +83,7 @@ public class User implements Serializable {
         this.ilearning = ilearning;
     }
 
-    public LinkedList<String> getLearned() {
+    public List<String> getLearned() {
         return learned;
     }
 
@@ -111,6 +132,7 @@ public class User implements Serializable {
         alllearned=new LinkedList<>();
         alllearning=new LinkedList<>();
         songTagMap = new HashMap<String, List<String>>();
+        songDateMap = new HashMap<String, Calendar>();
         plannew=10;
         planreview=10;
     }
@@ -125,6 +147,7 @@ public class User implements Serializable {
         alllearned=new LinkedList<>();
         alllearning=new LinkedList<>();
         songTagMap = new HashMap<String, List<String>>();
+        songDateMap = new HashMap<String, Calendar>();
         plannew=10;
         planreview=10;
     }
@@ -164,7 +187,29 @@ public class User implements Serializable {
                 }
             }
         }
+
+        if(this.learned.size() != 0) {
+            for(int i = 0; i < this.learned.size(); i++){
+                if(this.learned.get(i).equals(id)){
+                    return this.ilearned.get(i);
+                }
+            }
+        }
+
         return 0;
+    }
+
+    public void setExpById(String id, int exp) {
+
+        //System.out.println(this.learning);
+
+        if(this.learning.size() != 0) {
+            for(int i = 0; i < this.learning.size(); i++){
+                if(this.learning.get(i).equals(id)){
+                    this.ilearning.set(i, exp);
+                }
+            }
+        }
     }
 
     public Integer getIndexById(List<String> idList, String id) {
@@ -174,5 +219,61 @@ public class User implements Serializable {
             }
         }
         return null;
+    }
+
+    public boolean isTagDuplicated(String id, String tag) {
+        List<String> list= this.getSongTagMap().get(id);
+        for(String str : list){
+            if(str.equals(tag)){
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+    public void addTag(String id, String tag) {
+        if(id != null){
+            for(Map.Entry<String, List<String>> entry : this.songTagMap.entrySet()) {
+                if(entry.getKey().equals(id)) {
+                    if(!isTagDuplicated(id, tag)){
+                        entry.getValue().add(tag);
+                    }
+                    return;
+                }
+            }
+    
+            List<String> tagList = new LinkedList<String>();
+            tagList.add(tag);
+            this.songTagMap.put(id, tagList);
+        }
+        
+    }
+
+    public void updateDateMap(String id, Calendar day) {
+        if(day != null) {
+            for(Map.Entry<String, Calendar> entry : this.songDateMap.entrySet()){
+                if(entry.getKey().equals(id)){
+                    entry.setValue(day);
+                    return;
+                }
+            }
+            this.songDateMap.put(id, day);
+        }
+    }
+
+    public Map<String, Calendar> getSongDateMap() {
+        return songDateMap;
+    }
+
+    public void setSongDateMap(Map<String, Calendar> songDateMap) {
+        this.songDateMap = songDateMap;
+    }
+
+    public void printStudyDate() {
+        for(Map.Entry<String, Calendar> entry : this.songDateMap.entrySet()){
+            System.out.println(entry.getKey() + entry.getValue().toString());
+        }
     }
 }

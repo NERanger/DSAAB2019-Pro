@@ -65,20 +65,26 @@ public class StudyListViewController {
 
             songList.add(song);
 
-            Label title = new Label(song.getTitle());
-            title.setFont(new Font(30));
-            Label author = new Label(song.getAuthor());
-            author.setFont(new Font(20));
-            Label paragraph = new Label(song.getParagraph().substring(this.ABSTRACT_PARA_BEGIN_INDEX, this.ABSTRACT_PARA_END_INDEX) + " ...");
-            paragraph.setFont(new Font(15));
+            try {
+                Label title = new Label(song.getTitle());
+                title.setFont(new Font(30));
+                Label author = new Label(song.getAuthor());
+                author.setFont(new Font(20));
+                Label paragraph = new Label(song.getParagraph().substring(this.ABSTRACT_PARA_BEGIN_INDEX, this.ABSTRACT_PARA_END_INDEX) + " ...");
+                paragraph.setFont(new Font(15));
 
-            HBox hb = new HBox();
-            hb.setAlignment(Pos.BOTTOM_LEFT);
-            hb.setPadding(new Insets(2,5,2,5));
-            hb.setSpacing(15);
-            hb.getChildren().addAll(title, author, paragraph);
+                HBox hb = new HBox();
+                hb.setAlignment(Pos.BOTTOM_LEFT);
+                hb.setPadding(new Insets(2,5,2,5));
+                hb.setSpacing(15);
+                hb.getChildren().addAll(title, author, paragraph);
 
-            studyList.getItems().add(hb);
+                studyList.getItems().add(hb);
+            } catch (Exception e) {
+                
+            }
+
+            
         }
 
         label.setText("共显示" + songList.size() + "首诗词");

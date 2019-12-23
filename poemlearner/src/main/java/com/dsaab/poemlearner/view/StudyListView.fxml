@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dsaab.poemlearner.view.StudyListViewController">
+   <children>
+      <HBox layoutX="80.0" layoutY="75.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <ListView fx:id="studyList" layoutX="80.0" layoutY="75.0" prefHeight="200.0" prefWidth="400.0">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </ListView>
+            <VBox layoutX="363.0" layoutY="152.0" spacing="10.0">
+               <children>
+                  <Button layoutX="363.0" layoutY="152.0" mnemonicParsing="false" onAction="#handleCheckSongInfo" prefWidth="80.0" text="查看详情" />
+                  <Button layoutX="363.0" layoutY="214.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="23.0" prefWidth="80.0" text="返回" />
+                  <Label fx:id="label" text="Label" />
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

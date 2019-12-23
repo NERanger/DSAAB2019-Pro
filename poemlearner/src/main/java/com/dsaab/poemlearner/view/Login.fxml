@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dsaab.poemlearner.view.LoginController">
+   <children>
+      <Label layoutX="119.0" layoutY="120.0" text="Username">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="119.0" layoutY="173.0" text="Password">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="userNameField" layoutX="255.0" layoutY="122.0" prefHeight="23.0" prefWidth="213.0" />
+      <HBox layoutX="334.0" layoutY="252.0" spacing="20.0">
+         <children>
+            <Button layoutX="334.0" layoutY="252.0" mnemonicParsing="false" text="Register" />
+            <Button layoutX="413.0" layoutY="252.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="23.0" prefWidth="55.0" text="Login" />
+         </children>
+      </HBox>
+      <Label layoutX="88.0" layoutY="50.0" text="Welcome to Poem Learner">
+         <font>
+            <Font name="System Bold" size="29.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="passwordField" layoutX="255.0" layoutY="175.0" prefHeight="23.0" prefWidth="213.0" />
+      <Label fx:id="notMatchLabel" layoutX="255.0" layoutY="215.0" text="Label" textFill="RED" />
+   </children>
+</AnchorPane>

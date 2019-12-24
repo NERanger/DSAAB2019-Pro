@@ -292,6 +292,7 @@ public class SongUtil {
             }
 
         }
+
         return searchList;
     }
 
@@ -554,9 +555,9 @@ public class SongUtil {
         String textLine;
         String str = "";
         while ((textLine = bf.readLine()) != null) {
-            str = textLine;
+            str = HanLP.convertToTraditionalChinese(textLine);
             String[] numbs = str.split("\\s+");//0-num,10-title,11-parag,2-author
-            String[] parag = numbs[1].split("\\（|\\）|/");
+            String[] parag = numbs[1].split("\\(|\\)|/");
             String title=parag[0],para=parag[1],author=numbs[2];
             for (Song song : linkedList) {
                 if (song.getAuthor() != null && song.getAuthor().contains(author)

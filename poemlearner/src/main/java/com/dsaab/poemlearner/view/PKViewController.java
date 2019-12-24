@@ -49,7 +49,7 @@ public class PKViewController {
 
         for(User user : rankList) {
             //this.searchResult.add(song.getTitle() + " " + song.getAuthor() + " " + song.getParagraph());
-            Label rank = new Label("排名：" + Integer.toString(rankList.indexOf(user)));
+            Label rank = new Label("排名：" + Integer.toString(rankList.indexOf(user)+1));
             //rank.setFont(new Font(30));
             Label name = new Label("用户名：" + user.getUserName());
             //name.setFont(new Font(20));

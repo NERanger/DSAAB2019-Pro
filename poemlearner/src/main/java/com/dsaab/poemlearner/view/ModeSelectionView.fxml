@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dsaab.poemlearner.view.ModeSelectionViewController">
    <children>
+      <Label fx:id="image" layoutX="56.0" layoutY="239.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <GridPane layoutX="209.0" layoutY="99.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="202.0" />
@@ -25,6 +27,6 @@
             <Button mnemonicParsing="false" onAction="#handleWordCloud" prefHeight="72.0" prefWidth="183.0" text="词云分析" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Label fx:id="info" layoutX="48.0" layoutY="35.0" text="Label" />
+      <Label fx:id="info" layoutX="48.0" layoutY="35.0" text="Label" textFill="#ff8424" />
    </children>
 </AnchorPane>

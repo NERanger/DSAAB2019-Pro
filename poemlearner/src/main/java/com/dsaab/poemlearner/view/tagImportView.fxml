@@ -18,7 +18,7 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label fx:id="tips" layoutX="174.0" layoutY="80.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="tips" layoutX="174.0" layoutY="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Button layoutX="74.0" layoutY="112.0" mnemonicParsing="false" onAction="#handleBack" text="返回" GridPane.rowIndex="2" />
             <Button layoutX="74.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleChooseFile" text="选择文件" />
             <Label fx:id="filePath" layoutX="158.0" layoutY="42.0" text="未选择文件" GridPane.columnIndex="1">
